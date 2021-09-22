@@ -1,5 +1,8 @@
 package hu.futureofmedia.task.contactsapi.services;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 import hu.futureofmedia.task.contactsapi.entities.Contact;
 import hu.futureofmedia.task.contactsapi.entities.Status;
 import hu.futureofmedia.task.contactsapi.entities.dto.ContactDtoForList;
@@ -36,8 +39,12 @@ public class ContactService {
         return contactRepository.findById(id);
     }
 
-    public void save(Contact contact) {
-        contactRepository.save(contact);
+    public void save(Contact contact) throws NumberParseException {
+        PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
+        Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(contact.getPhoneNumber(), "HU");
+        if (phoneNumberUtil.isValidNumber(phoneNumber)) {
+            contactRepository.save(contact);
+        }
     }
 
     public void update(Contact contact, Long id) {
