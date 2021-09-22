@@ -1,5 +1,6 @@
 package hu.futureofmedia.task.contactsapi.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Contact {
 
     @Id
@@ -34,4 +36,11 @@ public class Contact {
     @UpdateTimestamp
     private LocalDateTime updateTime;
 
+    public Contact(String lastName, String firstName, String email, String phoneNumber, Company company) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.company = company;
+    }
 }
