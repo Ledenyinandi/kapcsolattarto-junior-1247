@@ -5,11 +5,14 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 import hu.futureofmedia.task.contactsapi.entities.Contact;
 import hu.futureofmedia.task.contactsapi.entities.Status;
-import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto;
+import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto1;
+import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto2;
+import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto3;
 import hu.futureofmedia.task.contactsapi.entities.mapper.ContactMapper;
 import hu.futureofmedia.task.contactsapi.repositories.CompanyRepository;
 import hu.futureofmedia.task.contactsapi.repositories.ContactRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -28,27 +31,28 @@ public class ContactService {
         this.companyRepository = companyRepository;
     }
 
-    public List<ContactDto> findAll() {
+    public List<ContactDto1> findAll() {
         List<Contact> sortedFilteredContacts = contactRepository.findAll().stream()
-                .filter(contact -> contact.getStatus().equals(Status.ACTIVE))
+                .filter(contact -> contact.getStatus() == Status.ACTIVE)
                 .sorted(Comparator.comparing(Contact::getLastName))
                 .collect(Collectors.toList());
-        List<ContactDto> contacts = new ArrayList<>();
+        List<ContactDto1> contacts = new ArrayList<>();
         sortedFilteredContacts.forEach(contact -> contacts.add(contactMapper.convertToDtoForFindAll(contact)));
         return contacts;
     }
 
-    public ContactDto findById(Long id) {
+    public ContactDto2 findById(Long id) {
         return contactMapper.convertToDtoForFindById(contactRepository.findById(id));
     }
 
-    public void save(ContactDto contactDto) throws NumberParseException {
+    public void save(ContactDto3 contactDto3) throws NumberParseException {
         PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
-        Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(contactDto.getPhoneNumber(), "HU");
+        Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(contactDto3.getPhoneNumber(), "HU");
         if (phoneNumberUtil.isValidNumber(phoneNumber)) {
             contactRepository.save(contactMapper.convertToEntityForSave(
-                    contactDto,
-                    companyRepository.findById(contactDto.getCompanyId())));
+                    contactDto3,
+                    companyRepository.findById(contactDto3.getCompanyId()),
+                    Status.ACTIVE));
         }
     }
 

@@ -2,7 +2,9 @@ package hu.futureofmedia.task.contactsapi.controllers;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import hu.futureofmedia.task.contactsapi.entities.Contact;
-import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto;
+import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto1;
+import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto2;
+import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto3;
 import hu.futureofmedia.task.contactsapi.services.ContactService;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -19,17 +21,18 @@ public class ContactController {
     }
 
     @GetMapping
-    public List<ContactDto> findAll() {
+    public List<ContactDto1> findAll() {
         return contactService.findAll();
     }
 
-    public ContactDto findById(Long id) {
+    @GetMapping("/{id}")
+    public ContactDto2 findById(@PathVariable("id") Long id) {
         return contactService.findById(id);
     }
 
     @PostMapping
-    public void save(@Valid @RequestBody ContactDto contactDto) throws NumberParseException {
-        contactService.save(contactDto);
+    public void save(@Valid @RequestBody ContactDto3 contactDto3) throws NumberParseException {
+        contactService.save(contactDto3);
     }
 
     public void update(Contact contact, Long id) {

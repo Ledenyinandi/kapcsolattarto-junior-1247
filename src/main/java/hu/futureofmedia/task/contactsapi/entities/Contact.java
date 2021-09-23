@@ -27,14 +27,15 @@ public class Contact {
     @ManyToOne
     private Company company;
     private String comment;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Status status;
     @CreatedDate
     private LocalDateTime createTime;
     @LastModifiedDate
     private LocalDateTime updateTime;
 
-    public Contact(String lastName, String firstName, String email, String phoneNumber, Company company, String comment) {
+    public Contact(Long id, String lastName, String firstName, String email, String phoneNumber, Company company, String comment) {
+        this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
         this.email = email;

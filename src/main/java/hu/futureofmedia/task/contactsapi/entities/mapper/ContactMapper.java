@@ -2,22 +2,29 @@ package hu.futureofmedia.task.contactsapi.entities.mapper;
 
 import hu.futureofmedia.task.contactsapi.entities.Company;
 import hu.futureofmedia.task.contactsapi.entities.Contact;
-import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto;
+import hu.futureofmedia.task.contactsapi.entities.Status;
+import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto1;
+import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto2;
+import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto3;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 @Component
 public class ContactMapper {
 
-    public ContactDto convertToDtoForFindAll(Contact contact) {
-        return new ContactDto(
-                contact.getFirstName() + contact.getLastName(),
+    public ContactDto1 convertToDtoForFindAll(Contact contact) {
+        return new ContactDto1(
+                contact.getId(),
+                contact.getFirstName() + "" + contact.getLastName(),
                 contact.getCompany().getName(),
                 contact.getEmail(),
                 contact.getPhoneNumber());
     }
 
-    public ContactDto convertToDtoForFindById(Contact contact) {
-        return new ContactDto(
+    public ContactDto2 convertToDtoForFindById(Contact contact) {
+        return new ContactDto2(
+                contact.getId(),
                 contact.getLastName(),
                 contact.getFirstName(),
                 contact.getCompany().getName(),
@@ -29,14 +36,18 @@ public class ContactMapper {
         );
     }
 
-    public Contact convertToEntityForSave(ContactDto contactDto, Company company) {
+    public Contact convertToEntityForSave(ContactDto3 contactDto3, Company company, Status status) {
         return new Contact(
-                contactDto.getLastName(),
-                contactDto.getFirstName(),
-                contactDto.getEmail(),
-                contactDto.getPhoneNumber(),
+                contactDto3.getId(),
+                contactDto3.getLastName(),
+                contactDto3.getFirstName(),
+                contactDto3.getEmail(),
+                contactDto3.getPhoneNumber(),
                 company,
-                contactDto.getComment()
+                contactDto3.getComment(),
+                status,
+                LocalDateTime.now(),
+                LocalDateTime.now()
                 );
     }
 }
