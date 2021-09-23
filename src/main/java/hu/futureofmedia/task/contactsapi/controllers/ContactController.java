@@ -2,7 +2,7 @@ package hu.futureofmedia.task.contactsapi.controllers;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import hu.futureofmedia.task.contactsapi.entities.Contact;
-import hu.futureofmedia.task.contactsapi.entities.dto.ContactDtoForList;
+import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto;
 import hu.futureofmedia.task.contactsapi.services.ContactService;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -12,24 +12,24 @@ import java.util.List;
 @RequestMapping("/contact")
 public class ContactController {
 
-    private ContactService contactService;
+    private final ContactService contactService;
 
     public ContactController(ContactService contactService) {
         this.contactService = contactService;
     }
 
     @GetMapping
-    public List<ContactDtoForList> findAll() {
+    public List<ContactDto> findAll() {
         return contactService.findAll();
     }
 
-    public Contact findById(Long id) {
+    public ContactDto findById(Long id) {
         return contactService.findById(id);
     }
 
     @PostMapping
-    public void save(@Valid @RequestBody Contact contact) throws NumberParseException {
-        contactService.save(contact);
+    public void save(@Valid @RequestBody ContactDto contactDto) throws NumberParseException {
+        contactService.save(contactDto);
     }
 
     public void update(Contact contact, Long id) {

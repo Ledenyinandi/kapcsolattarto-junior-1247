@@ -5,7 +5,7 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 import hu.futureofmedia.task.contactsapi.entities.Contact;
 import hu.futureofmedia.task.contactsapi.entities.Status;
-import hu.futureofmedia.task.contactsapi.entities.dto.ContactDtoForList;
+import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto;
 import hu.futureofmedia.task.contactsapi.entities.mapper.ContactMapper;
 import hu.futureofmedia.task.contactsapi.repositories.ContactRepository;
 import org.springframework.stereotype.Service;
@@ -17,33 +17,33 @@ import java.util.stream.Collectors;
 @Service
 public class ContactService {
 
-    private ContactRepository contactRepository;
-    private ContactMapper contactMapper;
+    private final ContactRepository contactRepository;
+    private final ContactMapper contactMapper;
 
     public ContactService(ContactRepository contactRepository, ContactMapper contactMapper) {
         this.contactRepository = contactRepository;
         this.contactMapper = contactMapper;
     }
 
-    public List<ContactDtoForList> findAll() {
+    public List<ContactDto> findAll() {
         List<Contact> sortedFilteredContacts = contactRepository.findAll().stream()
                 .filter(contact -> contact.getStatus().equals(Status.ACTIVE))
                 .sorted(Comparator.comparing(Contact::getLastName))
                 .collect(Collectors.toList());
-        List<ContactDtoForList> contacts = new ArrayList<>();
-        sortedFilteredContacts.forEach(contact -> contacts.add(contactMapper.convertToDtoForList(contact)));
+        List<ContactDto> contacts = new ArrayList<>();
+        sortedFilteredContacts.forEach(contact -> contacts.add(contactMapper.convertToDtoForFindAll(contact)));
         return contacts;
     }
 
-    public Contact findById(Long id) {
-        return contactRepository.findById(id);
+    public ContactDto findById(Long id) {
+        return contactMapper.convertToDtoForFindById(contactRepository.findById(id));
     }
 
-    public void save(Contact contact) throws NumberParseException {
+    public void save(ContactDto contactDto) throws NumberParseException {
         PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
-        Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(contact.getPhoneNumber(), "HU");
+        Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(contactDto.getPhoneNumber(), "HU");
         if (phoneNumberUtil.isValidNumber(phoneNumber)) {
-            contactRepository.save(contact);
+            contactRepository.save(contactMapper.convertToEntityForSave(contactDto));
         }
     }
 
