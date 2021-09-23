@@ -7,6 +7,7 @@ import hu.futureofmedia.task.contactsapi.entities.Contact;
 import hu.futureofmedia.task.contactsapi.entities.Status;
 import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto;
 import hu.futureofmedia.task.contactsapi.entities.mapper.ContactMapper;
+import hu.futureofmedia.task.contactsapi.repositories.CompanyRepository;
 import hu.futureofmedia.task.contactsapi.repositories.ContactRepository;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -19,10 +20,12 @@ public class ContactService {
 
     private final ContactRepository contactRepository;
     private final ContactMapper contactMapper;
+    private final CompanyRepository companyRepository;
 
-    public ContactService(ContactRepository contactRepository, ContactMapper contactMapper) {
+    public ContactService(ContactRepository contactRepository, ContactMapper contactMapper, CompanyRepository companyRepository) {
         this.contactRepository = contactRepository;
         this.contactMapper = contactMapper;
+        this.companyRepository = companyRepository;
     }
 
     public List<ContactDto> findAll() {
@@ -43,7 +46,9 @@ public class ContactService {
         PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
         Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(contactDto.getPhoneNumber(), "HU");
         if (phoneNumberUtil.isValidNumber(phoneNumber)) {
-            contactRepository.save(contactMapper.convertToEntityForSave(contactDto));
+            contactRepository.save(contactMapper.convertToEntityForSave(
+                    contactDto,
+                    companyRepository.findById(contactDto.getCompanyId())));
         }
     }
 
