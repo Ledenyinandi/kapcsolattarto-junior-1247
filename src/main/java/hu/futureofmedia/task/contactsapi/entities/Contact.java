@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,12 +20,8 @@ public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "This field must not be empty")
     private String lastName;
-    @NotBlank(message = "This field must not be empty")
     private String firstName;
-    @Email
-    @NotBlank(message = "This field must not be empty")
     private String email;
     private String phoneNumber;
     @ManyToOne
@@ -34,16 +29,17 @@ public class Contact {
     private String comment;
     @Enumerated
     private Status status;
-    @CreationTimestamp
+    @CreatedDate
     private LocalDateTime createTime;
-    @UpdateTimestamp
+    @LastModifiedDate
     private LocalDateTime updateTime;
 
-    public Contact(String lastName, String firstName, String email, String phoneNumber, Company company) {
+    public Contact(String lastName, String firstName, String email, String phoneNumber, Company company, String comment) {
         this.lastName = lastName;
         this.firstName = firstName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.company = company;
+        this.comment = comment;
     }
 }
