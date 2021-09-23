@@ -21,7 +21,8 @@ public class ContactDto {
     private String lastName;
     @NotBlank(message = "This field must not be empty")
     private String firstName;
-    private Company company;
+    private String companyName;
+    private Long companyId;
     @Email
     @NotBlank(message = "This field must not be empty")
     private String email;
@@ -30,30 +31,21 @@ public class ContactDto {
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 
-    public ContactDto(String fullName, Company company, String email, String phoneNumber) {
+    public ContactDto(String fullName, String companyName, String email, String phoneNumber) {
         this.fullName = fullName;
-        this.company = company;
+        this.companyName = companyName;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
 
-    public ContactDto(String lastName, String firstName, Company company, String email, String phoneNumber, String comment, LocalDateTime createTime, LocalDateTime updateTime) {
+    public ContactDto(String lastName, String firstName, String companyName, String email, String phoneNumber, String comment, LocalDateTime createTime, LocalDateTime updateTime) {
         this.lastName = lastName;
         this.firstName = firstName;
-        this.company = company;
+        this.companyName = companyName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.comment = comment;
         this.createTime = createTime;
         this.updateTime = updateTime;
-    }
-
-    public ContactDto(String lastName, String firstName, Company company, String email, String phoneNumber, String comment) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.company = company;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.comment = comment;
     }
 }

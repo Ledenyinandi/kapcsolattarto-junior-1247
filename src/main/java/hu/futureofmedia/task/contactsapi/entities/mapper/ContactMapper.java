@@ -1,5 +1,6 @@
 package hu.futureofmedia.task.contactsapi.entities.mapper;
 
+import hu.futureofmedia.task.contactsapi.entities.Company;
 import hu.futureofmedia.task.contactsapi.entities.Contact;
 import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ public class ContactMapper {
     public ContactDto convertToDtoForFindAll(Contact contact) {
         return new ContactDto(
                 contact.getFirstName() + contact.getLastName(),
-                contact.getCompany(),
+                contact.getCompany().getName(),
                 contact.getEmail(),
                 contact.getPhoneNumber());
     }
@@ -19,7 +20,7 @@ public class ContactMapper {
         return new ContactDto(
                 contact.getLastName(),
                 contact.getFirstName(),
-                contact.getCompany(),
+                contact.getCompany().getName(),
                 contact.getEmail(),
                 contact.getPhoneNumber(),
                 contact.getComment(),
@@ -28,13 +29,13 @@ public class ContactMapper {
         );
     }
 
-    public Contact convertToEntityForSave(ContactDto contactDto) {
+    public Contact convertToEntityForSave(ContactDto contactDto, Company company) {
         return new Contact(
                 contactDto.getLastName(),
                 contactDto.getFirstName(),
                 contactDto.getEmail(),
                 contactDto.getPhoneNumber(),
-                contactDto.getCompany(),
+                company,
                 contactDto.getComment()
                 );
     }
