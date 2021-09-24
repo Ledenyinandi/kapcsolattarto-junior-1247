@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -33,14 +32,4 @@ public class Contact {
     private LocalDateTime createTime;
     @LastModifiedDate
     private LocalDateTime updateTime;
-
-    public Contact(Long id, String lastName, String firstName, String email, String phoneNumber, Company company, String comment) {
-        this.id = id;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.company = company;
-        this.comment = comment;
-    }
 }

@@ -7,7 +7,6 @@ import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto1;
 import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto2;
 import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto3;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDateTime;
 
 @Component
@@ -16,7 +15,7 @@ public class ContactMapper {
     public ContactDto1 convertToDtoForFindAll(Contact contact) {
         return new ContactDto1(
                 contact.getId(),
-                contact.getFirstName() + "" + contact.getLastName(),
+                contact.getLastName() + " " + contact.getFirstName(),
                 contact.getCompany().getName(),
                 contact.getEmail(),
                 contact.getPhoneNumber());

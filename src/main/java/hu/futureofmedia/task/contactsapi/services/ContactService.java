@@ -9,10 +9,10 @@ import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto1;
 import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto2;
 import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto3;
 import hu.futureofmedia.task.contactsapi.entities.mapper.ContactMapper;
+import hu.futureofmedia.task.contactsapi.exceptions.InvalidArgumentException;
 import hu.futureofmedia.task.contactsapi.repositories.CompanyRepository;
 import hu.futureofmedia.task.contactsapi.repositories.ContactRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -53,6 +53,8 @@ public class ContactService {
                     contactDto3,
                     companyRepository.findById(contactDto3.getCompanyId()),
                     Status.ACTIVE));
+        } else {
+            throw new InvalidArgumentException();
         }
     }
 
