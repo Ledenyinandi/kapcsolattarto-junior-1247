@@ -7,7 +7,6 @@ import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto1;
 import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto2;
 import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto3;
 import org.springframework.stereotype.Component;
-import java.time.LocalDateTime;
 
 @Component
 public class ContactMapper {
