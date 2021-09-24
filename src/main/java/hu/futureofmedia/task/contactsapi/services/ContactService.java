@@ -58,9 +58,9 @@ public class ContactService {
         }
     }
 
-    public void update(Contact contact, Long id) {
-        contact.setId(id);
-        contactRepository.save(contact);
+    public void update(ContactDto3 contactDto3, Long id) throws NumberParseException {
+        contactDto3.setId(id);
+        save(contactDto3);
     }
 
     public void deleteById(Long id) {

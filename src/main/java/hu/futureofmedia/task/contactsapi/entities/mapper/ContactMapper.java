@@ -44,9 +44,7 @@ public class ContactMapper {
                 contactDto3.getPhoneNumber(),
                 company,
                 contactDto3.getComment(),
-                status,
-                LocalDateTime.now(),
-                LocalDateTime.now()
+                status
                 );
     }
 }

@@ -1,7 +1,6 @@
 package hu.futureofmedia.task.contactsapi.controllers;
 
 import com.google.i18n.phonenumbers.NumberParseException;
-import hu.futureofmedia.task.contactsapi.entities.Contact;
 import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto1;
 import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto2;
 import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto3;
@@ -35,8 +34,9 @@ public class ContactController {
         contactService.save(contactDto3);
     }
 
-    public void update(Contact contact, Long id) {
-        contactService.update(contact, id);
+    @PutMapping("/{id}")
+    public void update(@Valid @RequestBody ContactDto3 contactDto3, @PathVariable("id") Long id) throws NumberParseException {
+        contactService.update(contactDto3, id);
     }
 
     public void deleteById(Long id) {
