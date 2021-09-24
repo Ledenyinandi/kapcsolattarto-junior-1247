@@ -63,7 +63,9 @@ public class ContactService {
         save(contactDto3);
     }
 
-    public void deleteById(Long id) {
-        contactRepository.deleteById(id);
+    public void setStatusToDeleteById(Long id) {
+        Contact contact = contactRepository.findById(id);
+        contact.setStatus(Status.DELETED);
+        contactRepository.save(contact);
     }
 }
