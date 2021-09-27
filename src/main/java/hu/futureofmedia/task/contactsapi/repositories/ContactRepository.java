@@ -7,5 +7,5 @@ import java.util.List;
 public interface ContactRepository extends Repository<Contact, Long> {
     List<Contact> findAll();
     Contact findById(Long id);
-    void save(Contact contact);
+    Contact save(Contact contact);
 }
