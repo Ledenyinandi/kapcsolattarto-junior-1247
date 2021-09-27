@@ -1,6 +1,7 @@
 package hu.futureofmedia.task.contactsapi.controllers;
 
 import com.google.i18n.phonenumbers.NumberParseException;
+import hu.futureofmedia.task.contactsapi.entities.Contact;
 import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto1;
 import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto2;
 import hu.futureofmedia.task.contactsapi.entities.dto.ContactDto3;
@@ -34,8 +35,8 @@ public class ContactController {
 
     @ApiOperation(value = "Create new contact")
     @PostMapping
-    public void save(@Valid @RequestBody ContactDto3 contactDto3) throws NumberParseException {
-        contactService.save(contactDto3);
+    public Contact save(@Valid @RequestBody ContactDto3 contactDto3) throws NumberParseException {
+        return contactService.save(contactDto3);
     }
 
     @ApiOperation(value = "Update a contact by its id")
@@ -46,7 +47,7 @@ public class ContactController {
 
     @ApiOperation(value = "Set a contact's status to 'deleted'")
     @PutMapping("/delete/{id}")
-    public void setStatusToDeleteById(@PathVariable("id") Long id) {
-        contactService.setStatusToDeleteById(id);
+    public void setStatusToDeleted(@PathVariable("id") Long id) {
+        contactService.setStatusToDeleted(id);
     }
 }

@@ -45,11 +45,11 @@ public class ContactService {
         return contactMapper.convertToDtoForFindById(contactRepository.findById(id));
     }
 
-    public void save(ContactDto3 contactDto3) throws NumberParseException {
+    public Contact save(ContactDto3 contactDto3) throws NumberParseException {
         PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();
         Phonenumber.PhoneNumber phoneNumber = phoneNumberUtil.parse(contactDto3.getPhoneNumber(), "HU");
         if (phoneNumberUtil.isValidNumber(phoneNumber)) {
-            contactRepository.save(contactMapper.convertToEntityForSave(
+            return contactRepository.save(contactMapper.convertToEntityForSave(
                     contactDto3,
                     companyRepository.findById(contactDto3.getCompanyId()),
                     Status.ACTIVE));
@@ -63,9 +63,9 @@ public class ContactService {
         save(contactDto3);
     }
 
-    public void setStatusToDeleteById(Long id) {
+    public Contact setStatusToDeleted(Long id) {
         Contact contact = contactRepository.findById(id);
         contact.setStatus(Status.DELETED);
-        contactRepository.save(contact);
+        return contactRepository.save(contact);
     }
 }
