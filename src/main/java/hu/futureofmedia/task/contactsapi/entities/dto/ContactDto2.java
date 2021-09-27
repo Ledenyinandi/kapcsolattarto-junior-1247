@@ -1,5 +1,6 @@
 package hu.futureofmedia.task.contactsapi.entities.dto;
 
+import hu.futureofmedia.task.contactsapi.entities.Company;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ public class ContactDto2 {
     private Long id;
     private String lastName;
     private String firstName;
-    private String companyName;
+    private Company company;
     private String email;
     private String phoneNumber;
     private String comment;
